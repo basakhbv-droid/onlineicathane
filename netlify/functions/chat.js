@@ -1,8 +1,4 @@
-onlineicathane/
-  netlify/
-    functions/
-      chat.js
-  index.htmlexport default async (req) => {
+export default async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, {
       headers: {
