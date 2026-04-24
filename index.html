@@ -548,18 +548,6 @@
 </footer>
 
 <script>
-const SYSTEM_PROMPT = `Sen CodeLab adlı bir kodlama ve teknoloji eğitim sitesinin AI asistanısın.
-Ortaokul ve lise öğrencilerine (9-18 yaş) yardım ediyorsun.
-Konu alanların: C++ programlama, Arduino/elektronik, Tinkercad 3D tasarım.
-
-Kurallar:
-- Her zaman Türkçe cevap ver
-- Yaşa uygun, sade ve anlaşılır dil kullan
-- Kod örnekleri verirken kısa ve basit tut
-- Bol teşvik et, hataları nazikçe düzelt
-- Konudan çıkan sorularda nazikçe geri yönlendir
-- Cevaplar kısa olsun (maksimum 3-4 paragraf)`;
-
 let isLoading = false;
 const messagesDiv = document.getElementById('chatMessages');
 const input = document.getElementById('chatInput');
@@ -629,15 +617,10 @@ async function sendMessage() {
   addTyping();
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: conversationHistory
-      })
+      body: JSON.stringify({ messages: conversationHistory })
     });
 
     const data = await response.json();
@@ -649,7 +632,7 @@ async function sendMessage() {
 
   } catch (err) {
     document.getElementById('typing')?.remove();
-    addMsg('bot', 'Bağlantı hatası oluştu. Lütfen tekrar dene. 🔄');
+    addMsg('bot', 'Bağlantı hatası oluştu. 🔄');
   }
 
   isLoading = false;
